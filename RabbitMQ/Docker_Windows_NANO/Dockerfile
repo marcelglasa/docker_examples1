@@ -167,6 +167,9 @@ SHELL ["cmd", "/S", "/C"]
 
 RUN setx PATH "%PATH%;%RABBITMQ_HOME%\sbin;" /M
 
+HEALTHCHECK --start-period=30s --interval=30s --retries=5 \
+  CMD rabbitmq-diagnostics check_running
+
 # enable plugins and validate installation
 RUN rabbitmq-plugins.bat enable --offline rabbitmq_management rabbitmq_delayed_message_exchange rabbitmq_consistent_hash_exchange
 
